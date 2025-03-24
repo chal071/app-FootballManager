@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         String filePath = "src/resource/mercat_fitxatges.txt";
+        String filePathTeam = "src/resource/dato_equip.txt";
         Scanner sc = new Scanner(System.in);
         ArrayList<Person> market = new ArrayList<>();
-        ArrayList<Team> teams = new ArrayList<>();
+        ArrayList<Team> teams = loadTeamData(filePathTeam);
         loadPersonData(filePath, market);
-        loadTeamData(filePath, teams);
-        inputMenuOptions(filePath, sc, market, teams);
+        inputMenuOptions(filePath, filePathTeam, sc, market, teams);
     }
 
     public static void showMenu() {
@@ -47,14 +47,14 @@ public class Main {
             showTeamMenu();
             try {
                 option = sc.nextInt();
+                sc.nextLine();
                 if (option < 0 || option > 4) {
                     System.out.println("Invalid option. Try again.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid option!");
-                sc.nextLine();
             }
-            teamMenuOptionSwitch(option, sc, market, teams);
+            teamMenuOptionSwitch(option,sc,market,teams);
         } while (option != 0);
     }
 
@@ -75,24 +75,24 @@ public class Main {
         }
     }
 
-    public static void inputMenuOptions(String filePath,Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
+    public static void inputMenuOptions(String filePath, String filePathTeam, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
         int option = 1;
         do {
             showMenu();
             try {
                 option = sc.nextInt();
+                sc.nextLine();
                 if (option < 0 || option > 10) {
                     System.out.println("Invalid option. Try again.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid option!");
-                sc.nextLine();
             }
-            menuOptionsSwitch(filePath ,option, sc, market, teams);
+            menuOptionsSwitch(filePath,filePathTeam,option,sc,market,teams);
         } while (option != 0);
     }
 
-    public static void menuOptionsSwitch(String filePath,int option, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
+    public static void menuOptionsSwitch(String filePath,String filePathTeam,int option, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
         switch (option) {
             case 1:
                 break;
@@ -100,7 +100,7 @@ public class Main {
                 inputTeamMenu(sc, market, teams);
                 break;
             case 3:
-                registerTeam(sc, market);
+                registerTeam(sc, market, teams);
                 break;
             case 4:
                 addPersonToMarket(sc, market);
@@ -119,7 +119,7 @@ public class Main {
             case 9:
                 break;
             case 10:
-                askForWhatTypeOfDataWantToSave(sc, filePath, market, teams);
+                askForWhatTypeOfDataWantToSave(sc,filePath,filePathTeam, market,teams);
                 break;
         }
     }
@@ -128,11 +128,11 @@ public class Main {
         FileManager.loadMarket(filePath, market);
     }
 
-    public static void loadTeamData(String filePath, ArrayList<Team> teams) {
-        teams = FileManager.loadTeamFromFile(filePath);
+    public static ArrayList<Team> loadTeamData(String filePath) {
+        return FileManager.loadTeamFromFile(filePath);
     }
 
-    public static void askForWhatTypeOfDataWantToSave(Scanner sc, String filePath, ArrayList<Person> market, ArrayList<Team> teams) {
+    public static void askForWhatTypeOfDataWantToSave(Scanner sc, String filePath,String filePathTeam, ArrayList<Person> market, ArrayList<Team> teams) {
         int option;
         boolean exit = false;
         System.out.println("Save Data: \n" +
@@ -142,10 +142,11 @@ public class Main {
                 "Enter option: ");
         do {
             option = sc.nextInt();
-            if (option < 1 || option > 4) {
+            sc.nextLine();
+            if (option < 1 || option > 3) {
                 System.out.println("Invalid option. Try again.");
             } else if (option == 1) {
-                saveTeamData(filePath, teams);
+                saveTeamData(filePathTeam, teams);
                 exit = true;
             } else if (option == 2) {
                 savePersonData(filePath, market);
@@ -162,6 +163,7 @@ public class Main {
     }
 
     public static void saveTeamData(String filePath, ArrayList<Team> teams) {
+        System.out.println("📋 Teams to save: " + teams.size());
         FileManager.saveTeamToFile(filePath, teams);
     }
 
@@ -175,14 +177,14 @@ public class Main {
         do {
             int option = sc.nextInt();
             if (option == 1) {
-                Person.addPersonToMarket(market, Player.createPlayer(sc));
+                MarketManager.addPersonToMarket(market, Player.createPlayer(sc));
                 exit = true;
             }
             if (option == 2) {
-                Person.addPersonToMarket(market, Coach.createCoach(sc));
+                MarketManager.addPersonToMarket(market, Coach.createCoach(sc));
                 exit = true;
             } else if (option == 3) {
-                Person.addPersonToMarket(market, Person.createPerson(sc));
+                MarketManager.addPersonToMarket(market, Person.createPerson(sc));
                 exit = true;
             } else if (option == 4) {
                 exit = true;
@@ -202,6 +204,7 @@ public class Main {
                     "3. Exit");
             do {
                 int option = sc.nextInt();
+                sc.nextLine();
                 if (option == 1) {
                     team.addPlayerToTeam(sc, market);
                     exit = true;
@@ -224,7 +227,7 @@ public class Main {
     public static void dismissCoach (Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
         Team team = Team.searchTeamInTeamList(sc, teams);
         if (team != null) {
-            Person.addPersonToMarket(market, team.getCoach());
+            MarketManager.addPersonToMarket(market, team.getCoach());
             team.setCoach(null);
         } else {
             System.out.println("Invalid team. Try again.");
@@ -246,8 +249,9 @@ public class Main {
         }
     }
 
-    public static void registerTeam(Scanner sc, ArrayList<Person> market){
-        Team.createTeam(sc, market);
+    public static void registerTeam(Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
+        Team t = Team.createTeam(sc, market);
+        teams.add(t);
     }
 
     public static void performTrainingSession(Scanner sc, ArrayList<Person> market) {
@@ -255,9 +259,9 @@ public class Main {
         String personName = sc.nextLine();
         System.out.println("Input the person's surname that you want to train: ");
         String personSurname = sc.nextLine();
-        boolean find = Person.searchPersonInMarket(market, personName, personSurname);
+        boolean find = MarketManager.searchPersonInMarket(market, personName, personSurname);
         if (find) {
-            Person p =Person.loadSinglePersonData(market, personName, personSurname);
+            Person p =MarketManager.loadSinglePersonData(market, personName, personSurname);
             p.training();
         } else {
             System.out.println("Invalid person. Try again.");
@@ -265,22 +269,24 @@ public class Main {
 
     }
 
-    public static void checkTeamData(Scanner sc, ArrayList<Team> team) {
-        System.out.println("Input the team's name that you want to check: ");
-        String teamName = sc.nextLine();
-        Team t = Team.searchTeamInTeamList(sc, team);
-        System.out.println(t);
+    public static void checkTeamData(Scanner sc, ArrayList<Team> teams) {
+        Team t = Team.searchTeamInTeamList(sc, teams);
+        if (t != null) {
+            System.out.println("Team found!\n" + t);
+        } else {
+            System.out.println("Team not found. Please try again.");
+        }
     }
 
+
     public static void checkTeamPlayerData(Scanner sc, ArrayList<Team> team) {
-        System.out.println("Input the team's name that you want to check: ");
-        String teamName = sc.nextLine();
         Team t = Team.searchTeamInTeamList(sc, team);
         System.out.println("Input the player name that you want to check: ");
         String playerName = sc.nextLine();
         System.out.println("Input the player surname that you want to check: ");
         String playerSurname = sc.nextLine();
         boolean found = false;
+        assert t != null;
         for (Person p : t.getPlayers()) {
             if (p instanceof Player player &&
                     player.getName().equalsIgnoreCase(playerName) &&

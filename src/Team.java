@@ -14,6 +14,14 @@ public class Team {
     private Coach coach;
     private ArrayList<Person> players;
 
+    public Team (String teamName, int foundationYear, String city, String stadiumName, ArrayList<Person> players) {
+        this.teamName = teamName;
+        this.foundationYear = foundationYear;
+        this.city = city;
+        this.stadiumName = stadiumName;
+        this.players = players;
+    }
+
     public Team (String teamName, int foundationYear, String city, String stadiumName) {
         this.teamName = teamName;
         this.foundationYear = foundationYear;
@@ -22,34 +30,34 @@ public class Team {
     }
 
     public static Team createTeam(Scanner sc, ArrayList<Person> market) {
-        System.out.print("Team's name: ");
+        System.out.println("Team's name: ");
         String teamName = sc.nextLine();
-        System.out.print("Year of foundation: ");
+        System.out.println("Year of foundation: ");
         int foundationYear = Integer.parseInt(sc.nextLine());
-        System.out.print("City: ");
+        System.out.println("City: ");
         String city = sc.nextLine();
-        System.out.print("Stadium: ");
+        System.out.println("Stadium: ");
         String stadiumName = sc.nextLine();
         ArrayList<Person> players = new ArrayList<>();
-        Team team = new Team(teamName, foundationYear, city, stadiumName);
+        Team team = new Team(teamName, foundationYear, city, stadiumName, players);
         team.changePresident(market, sc);
         team.changeCoach(market, sc);
-        team.askForHowManyPlayers(sc, market);
+        team.askForHowManyPlayers(sc, market, team);
         return team;
     }
 
-    public void askForHowManyPlayers(Scanner sc, ArrayList<Person> market) {
-        System.out.println("How many player do you want to add to " + this.teamName + "?");
+    public void askForHowManyPlayers(Scanner sc, ArrayList<Person> market, Team team) {
+        System.out.println("How many player do you want to add?");
         int numberOfPlayers = sc.nextInt();
         sc.nextLine();
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.println("Player " + (i + 1));
-            addPlayerToTeam(sc, market);
+            team.addPlayerToTeam(sc, market);
         }
     }
 
     public void calcularTeamQuality() {
-        int qualityTotal = 0;
+        double qualityTotal = 0;
         int count = 0;
 
         for (Person person : this.players) {
@@ -69,11 +77,11 @@ public class Team {
         String playerName = sc.nextLine();
         System.out.println("Input the player's surname: ");
         String playerSurname = sc.nextLine();
-        boolean find = Person.searchPersonInMarket(market, playerName, playerSurname);
+        boolean find = MarketManager.searchPersonInMarket(market, playerName, playerSurname);
         if (find) {
-               System.out.println("Add " + playerName + " to the team: " + this.teamName + "!");
-               this.players.add(Player.loadSinglePersonData(market, playerName, playerSurname));
-               Player.removePersonFromMarket(market, playerName, playerSurname);
+               System.out.println("Add " + playerName + " to the team" + "!");
+               this.players.add(MarketManager.loadSinglePersonData(market, playerName, playerSurname));
+            MarketManager.removePersonFromMarket(market, playerName, playerSurname);
         } else {
                System.out.println("Person not found in market!");
         }
@@ -103,16 +111,17 @@ public class Team {
 
     public static Team searchTeamInTeamList(Scanner sc, ArrayList<Team> teams) {
         System.out.println("Input the team's name: ");
-        String teamName = sc.nextLine();
+        String teamName = sc.nextLine().trim();
         for (Team team : teams) {
-            if (team.teamName.equalsIgnoreCase(teamName)) {
+            if (team.getTeamName().equalsIgnoreCase(teamName)) {
                 return team;
-            } else {
-                System.out.println("Team not found in team list!");
             }
         }
+
+        System.out.println("Team not found in team list!");
         return null;
     }
+
 
 
     public void changeCoach(ArrayList<Person> market, Scanner sc) {
@@ -123,13 +132,13 @@ public class Team {
             System.out.println("Input the coach's surname: ");
             String coachSurname = sc.nextLine().trim();
             System.out.println("Searching in the market....");
-            boolean found = Person.searchPersonInMarket(market, coachName, coachSurname);
+            boolean found = MarketManager.searchPersonInMarket(market, coachName, coachSurname);
             if (found) {
-                Coach newCoach = (Coach) Person.loadSinglePersonData(market, coachName, coachSurname);
-                System.out.println("Found " + newCoach.getName() + ". Adding to team: " + this.teamName);
+                Coach newCoach = (Coach) MarketManager.loadSinglePersonData(market, coachName, coachSurname);
+                System.out.println("Found " + newCoach.getName() + ". Adding to team");
                 if (this.coach != null) {
                     System.out.println("Moving current coach " + this.coach.getName() + " to the market.");
-                    Person.addPersonToMarket(market, this.coach);
+                    MarketManager.addPersonToMarket(market, this.coach);
                 }
                 this.coach = newCoach;
                 exit = true;
@@ -139,7 +148,7 @@ public class Team {
                 if (response.equalsIgnoreCase("y")) {
                     if (this.coach != null) {
                         System.out.println("Moving current coach " + this.coach.getName() + " to the market.");
-                        Person.addPersonToMarket(market, this.coach);
+                        MarketManager.addPersonToMarket(market, this.coach);
                     }
                     this.coach = Coach.createCoach(sc);
                     System.out.println("New coach added to the team: " + this.coach.getName());
@@ -156,20 +165,19 @@ public class Team {
 
     public void changePresident(ArrayList<Person> market, Scanner sc) {
         boolean exit = false;
-
         do {
             System.out.println("Input the president's name: ");
             String presidentName = sc.nextLine().trim();
             System.out.println("Input the president's surname: ");
             String presidentSurname = sc.nextLine().trim();
             System.out.println("Searching in the market....");
-            boolean found = Person.searchPersonInMarket(market, presidentName, presidentSurname);
+            boolean found = MarketManager.searchPersonInMarket(market, presidentName, presidentSurname);
             if (found) {
-                Person newPresident = Person.loadSinglePersonData(market, presidentName, presidentSurname);
-                System.out.println("Found " + newPresident.getName() + ". Adding as president to team: " + this.teamName);
+                Person newPresident = MarketManager.loadSinglePersonData(market, presidentName, presidentSurname);
+                System.out.println("Found " + newPresident.getName() + ". Adding as president to team");
                 if (this.president != null) {
                     System.out.println("Moving current president " + this.president.getName() + " to the market.");
-                    Person.addPersonToMarket(market, this.president);
+                    MarketManager.addPersonToMarket(market, this.president);
                 }
                 this.president = newPresident;
                 exit = true;
@@ -179,7 +187,7 @@ public class Team {
                 if (response.equalsIgnoreCase("y")) {
                     if (this.president != null) {
                         System.out.println("↩Moving current president " + this.president.getName() + " to the market.");
-                        Person.addPersonToMarket(market, this.president);
+                        MarketManager.addPersonToMarket(market, this.president);
                     }
                     this.president = Person.createPerson(sc);
                     System.out.println("New president added to the team: " + this.president.getName());

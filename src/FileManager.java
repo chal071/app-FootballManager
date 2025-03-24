@@ -183,7 +183,6 @@ public class FileManager {
                 writer.write("---");
                 writer.newLine();
             }
-            ;
             System.out.println("Save data to " + filePath);
         } catch (IOException e) {
             System.out.println("Fail to save data: " + filePath);

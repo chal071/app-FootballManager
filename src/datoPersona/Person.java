@@ -35,18 +35,9 @@ public class Person {
         }
     }
 
-    public static boolean searchPersonInMarket(ArrayList<Person> market, String personName, String personSurname) {
-        for (Person Person : market) {
-            if(Person.getName().equals(personName) && Person.getSurname().equals(personSurname)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static Person createPerson(Scanner sc) {
         System.out.println("Input the person's name: ");
-        sc.nextLine();
         String name = sc.nextLine();
         System.out.println("Input the person's surname: ");
         String surname = sc.nextLine();
@@ -58,31 +49,6 @@ public class Person {
         double annualSalary = sc.nextDouble();
         sc.nextLine();
         return new Person(name, surname, birthday, motivation, annualSalary) {};
-    }
-
-    public static void addPersonToMarket(ArrayList<Person> market, Person person) {
-        market.add(person);
-    }
-
-    public static Person loadSinglePersonData(ArrayList<Person> market, String personName, String personSurname) {
-        for (Person person : market) {
-            if (person.getName().equalsIgnoreCase(personName) && person.getSurname().equalsIgnoreCase(personSurname)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public static void removePersonFromMarket(ArrayList<Person> market, String personName, String personSurname) {
-        for (Person person : market) {
-            if (person instanceof Player && person.getName().equalsIgnoreCase(personName) && person.getSurname().equalsIgnoreCase(personSurname)) {
-                market.remove(person);
-            } else if (person instanceof Coach && person.getName().equalsIgnoreCase(personName) && person.getSurname().equalsIgnoreCase(personSurname)) {
-                market.remove(person);
-            } else if (person != null && person.getName().equalsIgnoreCase(personName) && person.getSurname().equalsIgnoreCase(personSurname)) {
-                market.remove(person);
-            }
-        }
     }
 
     @Override
