@@ -3,6 +3,7 @@ import datoPersona.Person;
 import datoPersona.Player;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MarketManager {
     public static void removePersonFromMarket(ArrayList<Person> market, String name, String surname) {
@@ -40,5 +41,49 @@ public class MarketManager {
         }
         return null;
     }
+
+    public static void transferPlayer(Scanner sc, ArrayList<Team> teams) {
+        System.out.print("Player's current team? ");
+        Team originTeam = Team.searchTeamInTeamList(sc, teams);
+        if (originTeam == null) return;
+
+        System.out.print("Player's new team? ");
+        Team newTeam = Team.searchTeamInTeamList(sc, teams);
+        if (newTeam == null) return;
+
+        System.out.print("Player name: ");
+        String playerName = sc.nextLine();
+        System.out.print("Player surname: ");
+        String playerSurname = sc.nextLine();
+
+        Player target = null;
+        for (Person p : originTeam.getPlayers()) {
+            if (p instanceof Player player &&
+                    player.getName().equalsIgnoreCase(playerName) &&
+                    player.getSurname().equalsIgnoreCase(playerSurname)) {
+                target = player;
+                break;
+            }
+        }
+        if (target == null) {
+            System.out.println("❌ Player not found in " + originTeam.getTeamName());
+            return;
+        }
+        if (Team.isPlayerNumberTaken(newTeam, target.getPlayerNumber())) {
+            System.out.println("⚠️ Number " + target.getPlayerNumber() + " is already taken in " + newTeam.getTeamName());
+            int newNumber;
+            do {
+                System.out.print("Enter a new available number: ");
+                newNumber = Integer.parseInt(sc.nextLine());
+            } while (Team.isPlayerNumberTaken(newTeam, newNumber));
+            target.setPlayerNumber(newNumber);
+        }
+
+        originTeam.getPlayers().remove(target);
+        newTeam.getPlayers().add(target);
+        System.out.println("✅ " + playerName + " " + playerSurname + " has been transferred from " +
+                originTeam.getTeamName() + " to " + newTeam.getTeamName() + "!");
+    }
+
 
 }

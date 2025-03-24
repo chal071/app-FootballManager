@@ -154,4 +154,8 @@ public class Player extends Person {
     public String getPosition() {
         return position;
     }
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
 }

@@ -142,8 +142,7 @@ public class FileManager {
     }
 
     public static void saveTeamToFile(String filePath, ArrayList<Team> teams) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Team t : teams) {
                 writer.write("#Team");
                 writer.newLine();
@@ -168,7 +167,7 @@ public class FileManager {
                     writer.newLine();
                 }
 
-                if (t.getPlayers() != null) {
+                if (t.getPlayers() != null && !t.getPlayers().isEmpty()) {
                     writer.write("#Players");
                     writer.newLine();
                     for (Person player : t.getPlayers()) {
@@ -183,10 +182,12 @@ public class FileManager {
                 writer.write("---");
                 writer.newLine();
             }
-            System.out.println("Save data to " + filePath);
+            System.out.println("✅ Save successful! File: " + filePath);
         } catch (IOException e) {
-            System.out.println("Fail to save data: " + filePath);
+            System.out.println("❌ Fail to save data: " + filePath);
+            e.printStackTrace();
         }
     }
+
 }
 

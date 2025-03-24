@@ -77,15 +77,35 @@ public class Team {
         String playerName = sc.nextLine();
         System.out.println("Input the player's surname: ");
         String playerSurname = sc.nextLine();
-        boolean find = MarketManager.searchPersonInMarket(market, playerName, playerSurname);
-        if (find) {
-               System.out.println("Add " + playerName + " to the team" + "!");
-               this.players.add(MarketManager.loadSinglePersonData(market, playerName, playerSurname));
+
+        boolean found = MarketManager.searchPersonInMarket(market, playerName, playerSurname);
+
+        if (found) {
+            Player newPlayer = (Player) MarketManager.loadSinglePersonData(market, playerName, playerSurname);
+
+            if (isPlayerInTeam(this, playerName, playerSurname, newPlayer.getPlayerNumber())) {
+                System.out.println("This player is already in the team!");
+                return;
+            }
+
+            if (isPlayerNumberTaken(this, newPlayer.getPlayerNumber())) {
+                System.out.println("Dorsal number already taken. Please choose another:");
+                int newNumber;
+                do {
+                    System.out.print("New dorsal: ");
+                    newNumber = Integer.parseInt(sc.nextLine());
+                } while (isPlayerNumberTaken(this, newNumber));
+                newPlayer.setPlayerNumber(newNumber);
+            }
+
+            this.players.add(newPlayer);
             MarketManager.removePersonFromMarket(market, playerName, playerSurname);
+            System.out.println(newPlayer.getName() + " added to " + this.teamName + "!");
         } else {
-               System.out.println("Person not found in market!");
+            System.out.println("Person not found in market!");
         }
     }
+
 
     public static boolean isPlayerInTeam(Team team, String name, String surname, int number) {
         for (Person p : team.getPlayers()) {
@@ -121,8 +141,6 @@ public class Team {
         System.out.println("Team not found in team list!");
         return null;
     }
-
-
 
     public void changeCoach(ArrayList<Person> market, Scanner sc) {
         boolean exit = false;
@@ -162,7 +180,6 @@ public class Team {
         } while (!exit);
     }
 
-
     public void changePresident(ArrayList<Person> market, Scanner sc) {
         boolean exit = false;
         do {
@@ -200,8 +217,6 @@ public class Team {
             }
         } while (!exit);
     }
-
-
 
     //Setter
     public void setCoach(Coach coach) {

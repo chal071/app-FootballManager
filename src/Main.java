@@ -117,6 +117,7 @@ public class Main {
                 performTrainingSession(sc, market);
                 break;
             case 9:
+                MarketManager.transferPlayer(sc, teams);
                 break;
             case 10:
                 askForWhatTypeOfDataWantToSave(sc,filePath,filePathTeam, market,teams);
@@ -278,7 +279,6 @@ public class Main {
         }
     }
 
-
     public static void checkTeamPlayerData(Scanner sc, ArrayList<Team> team) {
         Team t = Team.searchTeamInTeamList(sc, team);
         System.out.println("Input the player name that you want to check: ");
@@ -300,7 +300,4 @@ public class Main {
         }
     }
 
-    public static void transferPlayer(Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
-
-    }
 }

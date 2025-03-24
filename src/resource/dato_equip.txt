@@ -1,21 +1,21 @@
 #Team
 FC Politecnics;2001;Barcelona;Estadi Central
 #President
-P;Joan;Garcia;1970-05-10;7;150000.0
+P;Joan;Garcia;1970-05-10;7.0;150000.0
 #Coach
-E;Anna;Martinez;1980-11-23;8;120000.0;3
+E;Anna;Martinez;1980-11-23;8.0;120000.0;3
 #Players
-J;Carlos;Ruiz;2000-04-15;6;75000.0;10;DAV;85
-J;Marc;Lopez;2002-07-03;5;68000.0;5;DEF;79
+J;Carlos;Ruiz;2000-04-15;6.0;75000.0;10;DAV;85.0
+J;Marc;Lopez;2002-07-03;5.0;68000.0;5;DEF;79.0
 ---
 #Team
 Union Femenina;1995;Madrid;Estadio Rosa
 #President
-P;Laura;Sanchez;1975-02-28;9;180000.0
+P;Laura;Sanchez;1975-02-28;9.0;180000.0
 #Coach
-E;Cristina;Perez;1982-09-14;7;110000.0;2
+E;Cristina;Perez;1982-09-14;7.0;110000.0;2
 #Players
-J;Nuria;Gomez;2001-12-10;6;72000.0;9;MIG;82
-J;Eva;Marti;2003-06-22;5;69000.0;2;DEF;78
-J;Luna;Diaz;2000-01-05;6;76000.0;1;POR;80
+J;Nuria;Gomez;2001-12-10;6.0;72000.0;9;MIG;82.0
+J;Eva;Marti;2003-06-22;5.0;69000.0;2;DEF;78.0
+J;Luna;Diaz;2000-01-05;6.0;76000.0;1;POR;80.0
 ---
