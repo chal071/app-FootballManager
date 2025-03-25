@@ -112,6 +112,7 @@ public class Main {
                 checkTeamPlayerData(sc, teams);
                 break;
             case 7:
+                Liga.startNewLiga(sc, teams);
                 break;
             case 8:
                 performTrainingSession(sc, market);

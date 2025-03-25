@@ -56,7 +56,7 @@ public class Team {
         }
     }
 
-    public void calcularTeamQuality() {
+    public double calcularTeamQuality() {
         double qualityTotal = 0;
         int count = 0;
 
@@ -69,7 +69,7 @@ public class Team {
         if (count > 0) {
             qualityTotal = qualityTotal / count;
         }
-        System.out.println("quality: " + qualityTotal);
+        return qualityTotal;
     }
 
     public void addPlayerToTeam(Scanner sc, ArrayList<Person> market) {
@@ -217,6 +217,29 @@ public class Team {
             }
         } while (!exit);
     }
+
+    public double getAverageMotivation() {
+        int total = 0;
+        int count = 0;
+        for (Person p : players) {
+            if (p instanceof Player player) {
+                total += player.getMotivationLevel();
+                count++;
+            }
+        }
+        return count > 0 ? (double) total / count : 0;
+    }
+
+    public ArrayList<Player> getOnlyPlayers() {
+        ArrayList<Player> result = new ArrayList<>();
+        for (Person p : players) {
+            if (p instanceof Player player) {
+                result.add(player);
+            }
+        }
+        return result;
+    }
+
 
     //Setter
     public void setCoach(Coach coach) {

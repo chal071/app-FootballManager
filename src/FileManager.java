@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import datoPersona.Person;
 
+
 public class FileManager {
     public static void loadMarket(String filePath, ArrayList<Person> market) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -68,7 +69,7 @@ public class FileManager {
                     String name = presData[1];
                     String surname = presData[2];
                     String birth = presData[3];
-                    int motivation = Integer.parseInt(presData[4]);
+                    double motivation = Double.parseDouble(presData[4]);
                     double salary = Double.parseDouble(presData[5]);
                     currentPresident = new Person(name, surname, birth, motivation, salary) {};
                 }
@@ -78,7 +79,7 @@ public class FileManager {
                     String name = coachData[1];
                     String surname = coachData[2];
                     String birth = coachData[3];
-                    int motivation = Integer.parseInt(coachData[4]);
+                    double motivation = Double.parseDouble(coachData[4]);
                     double salary = Double.parseDouble(coachData[5]);
                     int wins = Integer.parseInt(coachData[6]);
                     currentCoach = new Coach(name, surname, birth, motivation, salary, wins, false);
@@ -92,11 +93,11 @@ public class FileManager {
                             String name = playerData[1];
                             String surname = playerData[2];
                             String birth = playerData[3];
-                            int motivation = Integer.parseInt(playerData[4]);
+                            double motivation = Double.parseDouble(playerData[4]);
                             double salary = Double.parseDouble(playerData[5]);
                             int number = Integer.parseInt(playerData[6]);
                             String position = playerData[7];
-                            int quality = Integer.parseInt(playerData[8]);
+                            Double quality = Double.parseDouble(playerData[8]);
                             Player p = new Player(name, surname, birth, motivation, salary, number, position, quality);
                             currentPlayers.add(p);
                         }
@@ -188,6 +189,38 @@ public class FileManager {
             e.printStackTrace();
         }
     }
+
+    public static void saveMatchToFile(String filePath, Match match) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) { // true ➜ 追加
+            writer.write("#Match");
+            writer.newLine();
+            writer.write("Home;" + match.getTeamHome().getTeamName());
+            writer.newLine();
+            writer.write("Away;" + match.getTeamAway().getTeamName());
+            writer.newLine();
+            writer.write("Goals;" + match.getGoalsHome() + ";" + match.getGoalsAway());
+            writer.newLine();
+
+            if (match.getGoalHomePlayer() != null) {
+                writer.write("GoalHome;" + match.getGoalHomePlayer().getName() + ";" + match.getGoalHomePlayer().getSurname());
+                writer.newLine();
+            }
+
+            if (match.getGoalAwayPlayer() != null) {
+                writer.write("GoalAway;" + match.getGoalAwayPlayer().getName() + ";" + match.getGoalAwayPlayer().getSurname());
+                writer.newLine();
+            }
+
+            writer.write("---");
+            writer.newLine();
+
+            System.out.println("✅ Match saved to: " + filePath);
+        } catch (IOException e) {
+            System.out.println("❌ Failed to save match.");
+            e.printStackTrace();
+        }
+    }
+
 
 }
 
