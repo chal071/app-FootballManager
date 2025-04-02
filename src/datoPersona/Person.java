@@ -18,6 +18,12 @@ public class Person {
         this.annualSalary = annualSalary;
     }
 
+    public Person(String name, String surname, String birthDate) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+    }
+
     public void training() {
         System.out.println(this.name + " is having training!");
         this.motivationLevel+=0.2;

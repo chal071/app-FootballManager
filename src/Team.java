@@ -27,6 +27,7 @@ public class Team {
         this.foundationYear = foundationYear;
         this.city = city;
         this.stadiumName = stadiumName;
+        this.players = new ArrayList<>();
     }
 
     public static Team createTeam(Scanner sc, ArrayList<Person> market) {
@@ -83,6 +84,7 @@ public class Team {
         if (found) {
             Player newPlayer = (Player) MarketManager.loadSinglePersonData(market, playerName, playerSurname);
 
+            assert newPlayer != null;
             if (isPlayerInTeam(this, playerName, playerSurname, newPlayer.getPlayerNumber())) {
                 System.out.println("This player is already in the team!");
                 return;
@@ -108,11 +110,9 @@ public class Team {
 
 
     public static boolean isPlayerInTeam(Team team, String name, String surname, int number) {
+        Player target = new Player(name, surname, "null", number); // 只要 name, surname, number 相同就行
         for (Person p : team.getPlayers()) {
-            if (p instanceof Player player &&
-                    player.getName().equalsIgnoreCase(name) &&
-                    player.getSurname().equalsIgnoreCase(surname) &&
-                    player.getPlayerNumber() == number) {
+            if (p instanceof Player player && player.equals(target)) {
                 return true;
             }
         }

@@ -16,6 +16,11 @@ public class Player extends Person {
         this.quality = setQuality(quality);
     }
 
+    public Player(String name, String surname, String birthDate, int playerNumber){
+        super(name, surname, birthDate);
+        this.playerNumber = playerNumber;
+    }
+
     public String setPosition(String position) {
         if (!position.matches("POR|DEF|MIG|DAV")) {
             throw new IllegalArgumentException("Invalid position!");
@@ -145,6 +150,23 @@ public class Player extends Person {
                 "\nQuality: " + this.quality +
                 "\n------------------------------------------------";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Player player = (Player) obj;
+        return playerNumber == player.playerNumber &&
+                name.equalsIgnoreCase(player.name) &&
+                surname.equalsIgnoreCase(player.surname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name.toLowerCase(), surname.toLowerCase(), playerNumber);
+    }
+
 
     //Getter
     public int getPlayerNumber() {

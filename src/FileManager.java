@@ -183,44 +183,12 @@ public class FileManager {
                 writer.write("---");
                 writer.newLine();
             }
-            System.out.println("✅ Save successful! File: " + filePath);
+            System.out.println("Save successful! File: " + filePath);
         } catch (IOException e) {
-            System.out.println("❌ Fail to save data: " + filePath);
+            System.out.println("Fail to save data: " + filePath);
             e.printStackTrace();
         }
     }
-
-    public static void saveMatchToFile(String filePath, Match match) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) { // true ➜ 追加
-            writer.write("#Match");
-            writer.newLine();
-            writer.write("Home;" + match.getTeamHome().getTeamName());
-            writer.newLine();
-            writer.write("Away;" + match.getTeamAway().getTeamName());
-            writer.newLine();
-            writer.write("Goals;" + match.getGoalsHome() + ";" + match.getGoalsAway());
-            writer.newLine();
-
-            if (match.getGoalHomePlayer() != null) {
-                writer.write("GoalHome;" + match.getGoalHomePlayer().getName() + ";" + match.getGoalHomePlayer().getSurname());
-                writer.newLine();
-            }
-
-            if (match.getGoalAwayPlayer() != null) {
-                writer.write("GoalAway;" + match.getGoalAwayPlayer().getName() + ";" + match.getGoalAwayPlayer().getSurname());
-                writer.newLine();
-            }
-
-            writer.write("---");
-            writer.newLine();
-
-            System.out.println("✅ Match saved to: " + filePath);
-        } catch (IOException e) {
-            System.out.println("❌ Failed to save match.");
-            e.printStackTrace();
-        }
-    }
-
 
 }
 

@@ -12,10 +12,12 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         ArrayList<Person> market = new ArrayList<>();
         ArrayList<Team> teams = loadTeamData(filePathTeam);
+        League league = new League(teams);
         loadPersonData(filePath, market);
-        inputMenuOptions(filePath, filePathTeam, sc, market, teams);
+        inputMenuOptions(filePath, filePathTeam, sc, market, teams, league);
     }
 
+    //MAIN MENU
     public static void showMenu() {
         System.out.println("Welcome to HerGame Manager: \n" +
                 "1 - View current league standings \n" +
@@ -32,6 +34,59 @@ public class Main {
                 "You option: ");
     }
 
+    public static void inputMenuOptions(String filePath, String filePathTeam, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams, League league) {
+        int option = 1;
+        do {
+            showMenu();
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+                if (option < 0 || option > 10) {
+                    System.out.println("Invalid option. Try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid option!");
+            }
+            menuOptionsSwitch(filePath,filePathTeam,option,sc,market,teams,league);
+        } while (option != 0);
+    }
+
+    public static void menuOptionsSwitch(String filePath,String filePathTeam,int option, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams, League league) {
+        switch (option) {
+            case 1:
+                league.showRanking();
+                break;
+            case 2:
+                inputTeamMenu(sc, market, teams);
+                break;
+            case 3:
+                registerTeam(sc, market, teams);
+                break;
+            case 4:
+                addPersonToMarket(sc, market);
+                break;
+            case 5:
+                checkTeamData(sc, teams);
+                break;
+            case 6:
+                checkTeamPlayerData(sc, teams);
+                break;
+            case 7:
+                playLeague(sc, league, teams);
+                break;
+            case 8:
+                performTrainingSession(sc, market);
+                break;
+            case 9:
+                MarketManager.transferPlayer(sc, teams);
+                break;
+            case 10:
+                askForWhatTypeOfDataWantToSave(sc,filePath,filePathTeam, market,teams);
+                break;
+        }
+    }
+
+    //TEAM MENU
     public static void showTeamMenu() {
         System.out.println("Team Manager:\n" +
                 "1- Deregister team\n" +
@@ -75,65 +130,7 @@ public class Main {
         }
     }
 
-    public static void inputMenuOptions(String filePath, String filePathTeam, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
-        int option = 1;
-        do {
-            showMenu();
-            try {
-                option = sc.nextInt();
-                sc.nextLine();
-                if (option < 0 || option > 10) {
-                    System.out.println("Invalid option. Try again.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid option!");
-            }
-            menuOptionsSwitch(filePath,filePathTeam,option,sc,market,teams);
-        } while (option != 0);
-    }
-
-    public static void menuOptionsSwitch(String filePath,String filePathTeam,int option, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
-        switch (option) {
-            case 1:
-                break;
-            case 2:
-                inputTeamMenu(sc, market, teams);
-                break;
-            case 3:
-                registerTeam(sc, market, teams);
-                break;
-            case 4:
-                addPersonToMarket(sc, market);
-                break;
-            case 5:
-                checkTeamData(sc, teams);
-                break;
-            case 6:
-                checkTeamPlayerData(sc, teams);
-                break;
-            case 7:
-                Liga.startNewLiga(sc, teams);
-                break;
-            case 8:
-                performTrainingSession(sc, market);
-                break;
-            case 9:
-                MarketManager.transferPlayer(sc, teams);
-                break;
-            case 10:
-                askForWhatTypeOfDataWantToSave(sc,filePath,filePathTeam, market,teams);
-                break;
-        }
-    }
-
-    public static void loadPersonData(String filePath, ArrayList<Person> market) {
-        FileManager.loadMarket(filePath, market);
-    }
-
-    public static ArrayList<Team> loadTeamData(String filePath) {
-        return FileManager.loadTeamFromFile(filePath);
-    }
-
+    //SAVE DATA
     public static void askForWhatTypeOfDataWantToSave(Scanner sc, String filePath,String filePathTeam, ArrayList<Person> market, ArrayList<Team> teams) {
         int option;
         boolean exit = false;
@@ -169,6 +166,16 @@ public class Main {
         FileManager.saveTeamToFile(filePath, teams);
     }
 
+    //LOAD DATA
+    public static void loadPersonData(String filePath, ArrayList<Person> market) {
+        FileManager.loadMarket(filePath, market);
+    }
+
+    public static ArrayList<Team> loadTeamData(String filePath) {
+        return FileManager.loadTeamFromFile(filePath);
+    }
+
+    //TEAM MANAGER
     public static void addPersonToMarket(Scanner sc, ArrayList<Person> market) {
         boolean exit = false;
         System.out.println("Register player or coach: \n" +
@@ -256,6 +263,7 @@ public class Main {
         teams.add(t);
     }
 
+    //Training
     public static void performTrainingSession(Scanner sc, ArrayList<Person> market) {
         System.out.println("Input the person's name that you want to train: ");
         String personName = sc.nextLine();
@@ -271,6 +279,7 @@ public class Main {
 
     }
 
+    //CHECK DATA
     public static void checkTeamData(Scanner sc, ArrayList<Team> teams) {
         Team t = Team.searchTeamInTeamList(sc, teams);
         if (t != null) {
@@ -299,6 +308,26 @@ public class Main {
         }if (!found) {
             System.out.println("Player not found in this team!");
         }
+    }
+
+    //LEAGUE
+    public static void addTeamToLeague(Scanner sc, ArrayList<Team> teams, League league) {
+        Team t = Team.searchTeamInTeamList(sc, teams);
+        league.addTeam(t);
+    }
+
+    public static void playLeague(Scanner sc, League league, ArrayList<Team> teams) {
+        System.out.println("How many teams participate in the league: ");
+        int teamNumber = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < teamNumber; i++) {
+            addTeamToLeague(sc, teams, league);
+        }
+    }
+
+    public static void startleague(League league) {
+        league.createAllMatches();
+        league.playAllMatches();
     }
 
 }
