@@ -1,9 +1,7 @@
 import datoPersona.Coach;
 import datoPersona.Person;
 import datoPersona.Player;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,26 +10,27 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         ArrayList<Person> market = new ArrayList<>();
         ArrayList<Team> teams = loadTeamData(filePathTeam);
-        League league = new League(teams);
+        League league = new League();
         loadPersonData(filePath, market);
         inputMenuOptions(filePath, filePathTeam, sc, market, teams, league);
     }
 
     //MAIN MENU
     public static void showMenu() {
-        System.out.println("Welcome to HerGame Manager: \n" +
-                "1 - View current league standings \n" +
-                "2 - Manage team \n" +
-                "3 - Register team \n" +
-                "4 - Register new person \n" +
-                "5 - Check team data \n" +
-                "6 - Check team player data \n" +
-                "7 - Play new league \n" +
-                "8 - Perform training session \n" +
-                "9 - Transfer player \n" +
-                "10 - Save data \n" +
-                "0 - Exit \n" +
-                "You option: ");
+        System.out.println("\n👑 Welcome to HerGame Manager 👑");
+        System.out.println("=============================");
+        System.out.println("1️⃣  View current league standings 🏆");
+        System.out.println("2️⃣  Manage a team ⚙️");
+        System.out.println("3️⃣  Register a new team 📝");
+        System.out.println("4️⃣  Register new person (player/coach/president) 👤");
+        System.out.println("5️⃣  Check team data 📊");
+        System.out.println("6️⃣  Check team player data 🔍");
+        System.out.println("7️⃣  Start a new league ⚽");
+        System.out.println("8️⃣  Perform training session 🏋️‍♀️");
+        System.out.println("9️⃣  Transfer player 🔁");
+        System.out.println("🔟  Save data 💾");
+        System.out.println("0️⃣  Exit 🛑");
+        System.out.print("\n👉 Choose your option: ");
     }
 
     public static void inputMenuOptions(String filePath, String filePathTeam, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams, League league) {
@@ -47,53 +46,67 @@ public class Main {
             } catch (InputMismatchException e) {
                 System.out.println("Invalid option!");
             }
-            menuOptionsSwitch(filePath,filePathTeam,option,sc,market,teams,league);
+            menuOptionsSwitch(filePath, filePathTeam, option, sc, market, teams, league);
         } while (option != 0);
     }
 
-    public static void menuOptionsSwitch(String filePath,String filePathTeam,int option, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams, League league) {
+    public static void menuOptionsSwitch(String filePath, String filePathTeam, int option, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams, League league) {
         switch (option) {
             case 1:
                 league.showRanking();
+                System.out.println("-------------------------------");
                 break;
             case 2:
                 inputTeamMenu(sc, market, teams);
+                System.out.println("-------------------------------");
                 break;
             case 3:
                 registerTeam(sc, market, teams);
+                System.out.println("-------------------------------");
                 break;
             case 4:
                 addPersonToMarket(sc, market);
+                System.out.println("-------------------------------");
                 break;
             case 5:
                 checkTeamData(sc, teams);
+                System.out.println("-------------------------------");
                 break;
             case 6:
                 checkTeamPlayerData(sc, teams);
+                System.out.println("-------------------------------");
                 break;
             case 7:
-                playLeague(sc, league, teams);
+                inputLeagueMenu(sc, league, teams);
+                System.out.println("-------------------------------");
                 break;
             case 8:
                 performTrainingSession(sc, market);
+                System.out.println("-------------------------------");
                 break;
             case 9:
                 MarketManager.transferPlayer(sc, teams);
+                System.out.println("-------------------------------");
                 break;
             case 10:
-                askForWhatTypeOfDataWantToSave(sc,filePath,filePathTeam, market,teams);
+                askForWhatTypeOfDataWantToSave(sc, filePath, filePathTeam, market, teams);
+                System.out.println("-------------------------------");
+                break;
+            default:
+                System.out.println("Invalid option. Try again.");
                 break;
         }
     }
 
     //TEAM MENU
     public static void showTeamMenu() {
-        System.out.println("Team Manager:\n" +
-                "1- Deregister team\n" +
-                "2- Modify president\n" +
-                "3- Dismiss coach\n" +
-                "4- Register player or coach\n" +
-                " 0- Exit");
+        System.out.println("\n🛠️ Team Manager Menu:");
+        System.out.println("1️⃣  Deregister team ❌");
+        System.out.println("2️⃣  Modify president 👑");
+        System.out.println("3️⃣  Dismiss coach 📤");
+        System.out.println("4️⃣  Add player or coach ➕");
+        System.out.println("0️⃣  Return to main menu 🔙");
+        System.out.print("Select option: ");
     }
 
     public static void inputTeamMenu(Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
@@ -109,7 +122,7 @@ public class Main {
             } catch (InputMismatchException e) {
                 System.out.println("Invalid option!");
             }
-            teamMenuOptionSwitch(option,sc,market,teams);
+            teamMenuOptionSwitch(option, sc, market, teams);
         } while (option != 0);
     }
 
@@ -117,21 +130,30 @@ public class Main {
         switch (option) {
             case 1:
                 deregisterTeam(sc, teams);
+                System.out.println("-------------------------------");
                 break;
             case 2:
                 changePresident(sc, market, teams);
+                System.out.println("✅ President updated successfully!");
+                System.out.println("-------------------------------");
                 break;
             case 3:
                 dismissCoach(sc, market, teams);
+                System.out.println("🔁 Coach dismissed.");
+                System.out.println("-------------------------------");
                 break;
             case 4:
-                addPlayerOrCoachToTeam(sc,market,teams);
+                addPlayerOrCoachToTeam(sc, market, teams);
+                System.out.println("-------------------------------");
+                break;
+            default:
+                System.out.println("Invalid option. Try again.");
                 break;
         }
     }
 
     //SAVE DATA
-    public static void askForWhatTypeOfDataWantToSave(Scanner sc, String filePath,String filePathTeam, ArrayList<Person> market, ArrayList<Team> teams) {
+    public static void askForWhatTypeOfDataWantToSave(Scanner sc, String filePath, String filePathTeam, ArrayList<Person> market, ArrayList<Team> teams) {
         int option;
         boolean exit = false;
         System.out.println("Save Data: \n" +
@@ -153,7 +175,7 @@ public class Main {
             } else {
                 exit = true;
             }
-        }while (!exit);
+        } while (!exit);
 
     }
 
@@ -203,7 +225,7 @@ public class Main {
         } while (!exit);
     }
 
-    public static void addPlayerOrCoachToTeam (Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
+    public static void addPlayerOrCoachToTeam(Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
         boolean exit = false;
         Team team = Team.searchTeamInTeamList(sc, teams);
         if (team != null) {
@@ -233,7 +255,7 @@ public class Main {
 
     }
 
-    public static void dismissCoach (Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
+    public static void dismissCoach(Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
         Team team = Team.searchTeamInTeamList(sc, teams);
         if (team != null) {
             MarketManager.addPersonToMarket(market, team.getCoach());
@@ -271,7 +293,7 @@ public class Main {
         String personSurname = sc.nextLine();
         boolean find = MarketManager.searchPersonInMarket(market, personName, personSurname);
         if (find) {
-            Person p =MarketManager.loadSinglePersonData(market, personName, personSurname);
+            Person p = MarketManager.loadSinglePersonData(market, personName, personSurname);
             p.training();
         } else {
             System.out.println("Invalid person. Try again.");
@@ -305,8 +327,66 @@ public class Main {
                 found = true;
                 break;
             }
-        }if (!found) {
+        }
+        if (!found) {
             System.out.println("Player not found in this team!");
+        }
+    }
+
+    //LEAGUE MENU
+    public static void showLeagueMenu() {
+        System.out.println("\n🎮 League Menu:");
+        System.out.println("1️⃣  Start new league");
+        System.out.println("2️⃣  View current league teams");
+        System.out.println("3️⃣  Add team to league");
+        System.out.println("4️⃣  Reset league (clear all teams)");
+        System.out.println("0️⃣  Return to main menu");
+        System.out.print("Select option: ");
+    }
+
+    public static void inputLeagueMenu(Scanner sc, League league, ArrayList<Team> teams) {
+        int option = 1;
+        do {
+            showLeagueMenu();
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+                if (option < 0 || option > 4) {
+                    System.out.println("❌ Invalid option. Try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input!");
+                sc.nextLine();
+            }
+            leagueMenuSwitch(option, sc, league, teams);
+        } while (option != 0);
+    }
+
+    public static void leagueMenuSwitch(int option, Scanner sc, League league, ArrayList<Team> teams) {
+        switch (option) {
+            case 1:
+                startleague(league);
+                System.out.println("✅ League finished!");
+                System.out.println("-------------------------------");
+                break;
+            case 2:
+                league.showTeam();
+                System.out.println("📋 Teams in current league:");
+                break;
+            case 3:
+                createTeamListToLeague(sc, league, teams);
+                System.out.println("-------------------------------");
+                break;
+            case 4:
+                league.reset();
+                System.out.println("🔄 League has been reset.");
+                System.out.println("-------------------------------");
+                break;
+            case 0:
+                System.out.println("🔙 Returning to main menu...");
+                break;
+            default:
+                System.out.println("❌ Unknown option.");
         }
     }
 
@@ -316,8 +396,8 @@ public class Main {
         league.addTeam(t);
     }
 
-    public static void playLeague(Scanner sc, League league, ArrayList<Team> teams) {
-        System.out.println("How many teams participate in the league: ");
+    public static void createTeamListToLeague(Scanner sc, League league, ArrayList<Team> teams) {
+        System.out.println("How many do you want add to the league: ");
         int teamNumber = sc.nextInt();
         sc.nextLine();
         for (int i = 0; i < teamNumber; i++) {
@@ -326,6 +406,10 @@ public class Main {
     }
 
     public static void startleague(League league) {
+        if (league.getTeams().size() < 2) {
+            System.out.println("❌ You need at least 2 teams to start the league!");
+            return;
+        }
         league.createAllMatches();
         league.playAllMatches();
     }

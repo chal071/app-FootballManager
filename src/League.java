@@ -2,30 +2,32 @@ import java.util.*;
 import datoPersona.Player;
 
 public class League {
-    private ArrayList<Team> teams; // 所有参赛队伍
-    private ArrayList<Match> matches; // 所有比赛记录
-    private Map<Team, Integer> points; // 每支队的积分
-    private Map<Player, Integer> goalScorers; // 每位球员的进球数
+    private Set<Team> teams;
+    private ArrayList<Match> matches;
+    private Map<Team, Integer> points;
+    private Map<Player, Integer> goalScorers;
 
-    public League(ArrayList<Team> teams) {
-        this.teams = teams;
+    public League() {
+        this.teams = new HashSet<>();
         this.matches = new ArrayList<>();
         this.points = new HashMap<>();
         this.goalScorers = new HashMap<>();
-
-        for (Team team : teams) {
-            points.put(team, 0); // 初始积分为 0
-        }
     }
 
     public void addTeam(Team team) {
-        this.teams.add(team);
+        if (teams.add(team)) {
+            points.put(team, 0);
+            System.out.println("✅ Team added: " + team.getTeamName());
+        } else {
+            System.out.println("⚠️ Team already in the league: " + team.getTeamName());
+        }
     }
 
     public void createAllMatches() {
-        for (int i = 0; i < teams.size(); i++) {
-            for (int j = i + 1; j < teams.size(); j++) {
-                Match m = new Match(teams.get(i), teams.get(j));
+        List<Team> teamList = new ArrayList<>(teams);
+        for (int i = 0; i < teamList.size(); i++) {
+            for (int j = i + 1; j < teamList.size(); j++) {
+                Match m = new Match(teamList.get(i), teamList.get(j));
                 matches.add(m);
             }
         }
@@ -90,6 +92,13 @@ public class League {
         }
     }
 
+    public void reset() {
+        teams.clear();
+        matches.clear();
+        points.clear();
+        goalScorers.clear();
+    }
+
     public ArrayList<Match> getMatches() {
         return matches;
     }
@@ -100,5 +109,9 @@ public class League {
 
     public Map<Player, Integer> getGoalScorers() {
         return goalScorers;
+    }
+
+    public Set<Team> getTeams() {
+        return teams;
     }
 }
