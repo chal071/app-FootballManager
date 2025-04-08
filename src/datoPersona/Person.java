@@ -30,7 +30,7 @@ public class Person {
         if(this.motivationLevel > 10) {
             this.motivationLevel=10;
         }
-        System.out.println(this.name + "'s motivation is " + this.motivationLevel);
+        System.out.printf("%s's motivation is %.1f\n", this.name, this.motivationLevel);
     }
 
     public double setMotivationLevel(double motivationLevel) {
@@ -65,6 +65,7 @@ public class Person {
                 + "\nMotivation Level: " + this.motivationLevel
                 + "\nAnnual Salary: " + this.annualSalary;
     }
+
 
     //Getter
 

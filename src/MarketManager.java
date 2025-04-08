@@ -3,6 +3,7 @@ import datoPersona.Person;
 import datoPersona.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class MarketManager {
@@ -26,7 +27,7 @@ public class MarketManager {
 
     public static boolean searchPersonInMarket(ArrayList<Person> market, String personName, String personSurname) {
         for (Person Person : market) {
-            if(Person.getName().equals(personName) && Person.getSurname().equals(personSurname)) {
+            if(Person.getName().equalsIgnoreCase(personName) && Person.getSurname().equalsIgnoreCase(personSurname)) {
                 return true;
             }
         }
@@ -84,6 +85,39 @@ public class MarketManager {
         System.out.println("✅ " + playerName + " " + playerSurname + " has been transferred from " +
                 originTeam.getTeamName() + " to " + newTeam.getTeamName() + "!");
     }
+
+    public static void showMarketSummary(ArrayList<Person> market) {
+        ArrayList<Player> marketPlayers = new ArrayList<>();
+        ArrayList<Coach> marketCoaches = new ArrayList<>();
+
+        for (Person p : market) {
+            if (p instanceof Player) {
+                marketPlayers.add((Player) p);
+            } else if (p instanceof Coach) {
+                marketCoaches.add((Coach) p);
+            }
+        }
+
+        marketPlayers.sort(Player.byQualityThenMotivationThenSurname);
+        marketCoaches.sort(Comparator.comparing(Coach::getMotivationLevel).reversed());
+
+        System.out.println("\n📋 Market Overview");
+
+        System.out.println("\n🧍 Players (" + marketPlayers.size() + "):");
+        for (Player p : marketPlayers) {
+            System.out.println("- " + p.getMarketSummary());
+        }
+
+        System.out.println("\n🎓 Coaches (" + marketCoaches.size() + "):");
+        for (Coach c : marketCoaches) {
+            System.out.println("- " + c.getMarketSummary());
+        }
+
+        System.out.println("\n📊 Total people in market: " + market.size());
+    }
+
+
+
 
 
 }

@@ -15,6 +15,10 @@ public class League {
     }
 
     public void addTeam(Team team) {
+        if (team == null) {
+            System.out.println("❌ Invalid team (null). Cannot add to league.");
+            return;
+        }
         if (teams.add(team)) {
             points.put(team, 0);
             System.out.println("✅ Team added: " + team.getTeamName());
@@ -105,10 +109,6 @@ public class League {
 
     public Map<Team, Integer> getPointsTable() {
         return points;
-    }
-
-    public Map<Player, Integer> getGoalScorers() {
-        return goalScorers;
     }
 
     public Set<Team> getTeams() {

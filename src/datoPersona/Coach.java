@@ -59,6 +59,19 @@ public class Coach extends Person {
                 "\n------------------------------------------------";
     }
 
+    public String getMarketSummary() {
+        return String.format(
+                "%s %s | 🎯 Motivation: %.1f | 💰 Salary: €%.2f | 🏆 Titles: %d | %s",
+                this.getName(),
+                this.getSurname(),
+                this.getMotivationLevel(),
+                this.getAnnualSalary(),
+                this.numberOfWon,
+                this.isNationalTeamCoach ? "🇪🇸 National Coach" : "🏠 Club Coach"
+        );
+    }
+
+
 
     //Getter
 

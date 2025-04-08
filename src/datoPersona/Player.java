@@ -1,5 +1,6 @@
 package datoPersona;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
@@ -106,6 +107,7 @@ public class Player extends Person {
             this.quality += 1;
             System.out.println(this.name + " changed position to " + this.position + "!");
             System.out.println(this.name + "'s quality increased by 1 → New quality: " + this.quality);
+            System.out.printf("%s's quality increased 1 → New quality: %.1f\n", this.name, this.quality);
         } else {
             double increase;
             if (chance < 15) {
@@ -119,7 +121,7 @@ public class Player extends Person {
             if (this.quality > 100) {
                 this.quality = 100;
             }
-            System.out.println(this.name + "'s quality increased" + increase +"\n New quality: " + this.quality + "!");
+            System.out.printf("%s's quality increased %.1f → New quality: %.1f\n", this.name, increase, this.quality);
         }
     }
 
@@ -137,6 +139,7 @@ public class Player extends Person {
         String position = sc.nextLine().toUpperCase();
         System.out.println("Input the person's quality(30 - 100): ");
         int quality = sc.nextInt();
+        sc.nextLine();
         return new Player(person.name, person.surname, person.birthDate, person.motivationLevel, person.annualSalary,
                 playerNumber, position, quality);
     }
@@ -149,6 +152,13 @@ public class Player extends Person {
                 "\nPosition: " + this.position +
                 "\nQuality: " + this.quality +
                 "\n------------------------------------------------";
+    }
+
+    public String getMarketSummary() {
+        return String.format(
+                "#%d | %s %s | %s | Q: %.1f | Mot: %.1f",
+                this.playerNumber, this.getName(), this.getSurname(), this.position, this.quality, this.getMotivationLevel()
+        );
     }
 
     @Override
@@ -166,6 +176,24 @@ public class Player extends Person {
     public int hashCode() {
         return Objects.hash(name.toLowerCase(), surname.toLowerCase(), playerNumber);
     }
+
+    public static Comparator<Player> byQualityThenMotivationThenSurname = (p1, p2) -> {
+        if (p2.getQuality() != p1.getQuality()) {
+            return Double.compare(p2.getQuality(), p1.getQuality());
+        } else if (p2.getMotivationLevel() != p1.getMotivationLevel()) {
+            return Double.compare(p2.getMotivationLevel(), p1.getMotivationLevel());
+        } else {
+            return p1.getSurname().compareToIgnoreCase(p2.getSurname());
+        }
+    };
+
+    public static Comparator<Player> byPositionThenQuality = (p1, p2) -> {
+        int comparator = p1.getPosition().compareToIgnoreCase(p2.getPosition());
+        if (comparator == 0) {
+            return Double.compare(p2.getQuality(), p1.getQuality());
+        }
+        return comparator;
+    };
 
 
     //Getter

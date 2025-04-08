@@ -53,7 +53,7 @@ public class Main {
     public static void menuOptionsSwitch(String filePath, String filePathTeam, int option, Scanner sc, ArrayList<Person> market, ArrayList<Team> teams, League league) {
         switch (option) {
             case 1:
-                league.showRanking();
+                inputClassificationMenu(sc, league);
                 System.out.println("-------------------------------");
                 break;
             case 2:
@@ -91,6 +91,9 @@ public class Main {
             case 10:
                 askForWhatTypeOfDataWantToSave(sc, filePath, filePathTeam, market, teams);
                 System.out.println("-------------------------------");
+                break;
+            case 0:
+                System.out.println("Exiting.....");
                 break;
             default:
                 System.out.println("Invalid option. Try again.");
@@ -207,15 +210,19 @@ public class Main {
                 "4. Exit");
         do {
             int option = sc.nextInt();
+            sc.nextLine();
             if (option == 1) {
                 MarketManager.addPersonToMarket(market, Player.createPlayer(sc));
+                System.out.println("Player added successfully!");
                 exit = true;
             }
             if (option == 2) {
                 MarketManager.addPersonToMarket(market, Coach.createCoach(sc));
+                System.out.println("Coach added successfully!");
                 exit = true;
             } else if (option == 3) {
                 MarketManager.addPersonToMarket(market, Person.createPerson(sc));
+                System.out.println("President added successfully!");
                 exit = true;
             } else if (option == 4) {
                 exit = true;
@@ -287,6 +294,7 @@ public class Main {
 
     //Training
     public static void performTrainingSession(Scanner sc, ArrayList<Person> market) {
+        MarketManager.showMarketSummary(market);
         System.out.println("Input the person's name that you want to train: ");
         String personName = sc.nextLine();
         System.out.println("Input the person's surname that you want to train: ");
@@ -294,6 +302,7 @@ public class Main {
         boolean find = MarketManager.searchPersonInMarket(market, personName, personSurname);
         if (find) {
             Person p = MarketManager.loadSinglePersonData(market, personName, personSurname);
+            assert p != null;
             p.training();
         } else {
             System.out.println("Invalid person. Try again.");
@@ -303,6 +312,10 @@ public class Main {
 
     //CHECK DATA
     public static void checkTeamData(Scanner sc, ArrayList<Team> teams) {
+        System.out.println("📝 Available teams:");
+        for (Team team : teams) {
+            System.out.println("- " + team.getTeamName());
+        }
         Team t = Team.searchTeamInTeamList(sc, teams);
         if (t != null) {
             System.out.println("Team found!\n" + t);
@@ -311,26 +324,38 @@ public class Main {
         }
     }
 
-    public static void checkTeamPlayerData(Scanner sc, ArrayList<Team> team) {
-        Team t = Team.searchTeamInTeamList(sc, team);
-        System.out.println("Input the player name that you want to check: ");
-        String playerName = sc.nextLine();
-        System.out.println("Input the player surname that you want to check: ");
-        String playerSurname = sc.nextLine();
-        boolean found = false;
-        assert t != null;
+    public static void checkTeamPlayerData(Scanner sc, ArrayList<Team> teams) {
+        System.out.println("📝 Available teams:");
+        for (Team team : teams) {
+            System.out.println("- " + team.getTeamName());
+        }
+        Team t = Team.searchTeamInTeamList(sc, teams);
+        if (t == null) {
+            System.out.println("❌ Team not found.");
+            return;
+        }
+        System.out.println("👥 Players in " + t.getTeamName() + ":");
         for (Person p : t.getPlayers()) {
-            if (p instanceof Player player &&
-                    player.getName().equalsIgnoreCase(playerName) &&
-                    player.getSurname().equalsIgnoreCase(playerSurname)) {
-                System.out.println("Player found!\n" + player);
-                found = true;
-                break;
+            if (p instanceof Player player) {
+                System.out.println("- " + player.getName() + " " + player.getSurname() + " (Dorsal: " + player.getPlayerNumber() + ")");
             }
         }
-        if (!found) {
-            System.out.println("Player not found in this team!");
+        System.out.println("Input the player name you want to check: ");
+        String playerName = sc.nextLine();
+        System.out.println("Input the player surname: ");
+        String playerSurname = sc.nextLine();
+        System.out.println("Input the player number: ");
+        int number = sc.nextInt();
+        sc.nextLine();
+        Player searchPlayer = new Player(playerName, playerSurname, null, 0, 0, number, null, 0); // 只需要匹配用的字段
+        for (Person p : t.getPlayers()) {
+            if (p instanceof Player player && player.equals(searchPlayer)) {
+                System.out.println("✅ Player found!\n" + player);
+                return;
+            }
         }
+
+        System.out.println("❌ Player not found in this team!");
     }
 
     //LEAGUE MENU
@@ -365,7 +390,7 @@ public class Main {
     public static void leagueMenuSwitch(int option, Scanner sc, League league, ArrayList<Team> teams) {
         switch (option) {
             case 1:
-                startleague(league);
+                startLeague(league);
                 System.out.println("✅ League finished!");
                 System.out.println("-------------------------------");
                 break;
@@ -391,27 +416,108 @@ public class Main {
     }
 
     //LEAGUE
-    public static void addTeamToLeague(Scanner sc, ArrayList<Team> teams, League league) {
+    public static boolean addTeamToLeague(Scanner sc, ArrayList<Team> teams, League league) {
         Team t = Team.searchTeamInTeamList(sc, teams);
+        if (t == null) {
+            System.out.println("⏹️ Cancelled or team not found.");
+            return false;
+        }
         league.addTeam(t);
+        return true;
     }
 
+
     public static void createTeamListToLeague(Scanner sc, League league, ArrayList<Team> teams) {
-        System.out.println("How many do you want add to the league: ");
+        System.out.println("How many do you want to add to the league: ");
         int teamNumber = sc.nextInt();
         sc.nextLine();
+
+        System.out.println("\n📋 Available Teams:");
+        for (Team t : teams) {
+            if (!league.getTeams().contains(t)) {
+                System.out.println("- " + t.getTeamName());
+            }
+        }
+
+
         for (int i = 0; i < teamNumber; i++) {
-            addTeamToLeague(sc, teams, league);
+            boolean success = addTeamToLeague(sc, teams, league);
+            if (!success) {
+                System.out.println("❗Team not added.");
+                System.out.print("Do you want to continue? (y/n): ");
+                String ans = sc.nextLine();
+                if (ans.equalsIgnoreCase("n")) {
+                    System.out.println("🚪 Team input cancelled.");
+                    break;
+                }
+                i--;
+            }
         }
     }
 
-    public static void startleague(League league) {
+
+    public static void startLeague(League league) {
         if (league.getTeams().size() < 2) {
             System.out.println("❌ You need at least 2 teams to start the league!");
             return;
         }
         league.createAllMatches();
         league.playAllMatches();
+    }
+
+    //Classification MENU
+    public static void showClassificationMenu() {
+        System.out.println("League classification:\n" +
+                "1️⃣  Classification\n" +
+                "2️⃣  Top Scorers\n" +
+                "3️⃣  Show all matches\n" +
+                "0️⃣  Back to main menu"
+        );
+        System.out.print("Select option: ");
+
+    }
+
+    public static void inputClassificationMenu(Scanner sc, League league) {
+        int option = 1;
+        do {
+            showClassificationMenu();
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+                if (option < 0 || option > 3) {
+                    System.out.println("❌ Invalid option. Try again.");
+                    continue;
+                }
+                classificationMenuSwitch(option, league);
+            } catch (InputMismatchException e) {
+                System.out.println("❌ Invalid input!");
+                sc.nextLine();
+            }
+        } while (option != 0);
+    }
+
+    public static void classificationMenuSwitch(int option, League league) {
+        switch (option) {
+            case 1:
+                league.showRanking();
+                System.out.println("-------------------------------");
+                break;
+            case 2:
+                league.showTopScorers();
+                System.out.println("-------------------------------");
+                break;
+            case 3:
+                for (Match match : league.getMatches()) {
+                    System.out.println(match);
+                }
+                System.out.println("-------------------------------");
+                break;
+            case 0:
+                System.out.println("🔙 Returning to main menu...");
+                break;
+            default:
+                System.out.println("❌ Unknown option.");
+        }
     }
 
 }

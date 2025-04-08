@@ -1,21 +1,169 @@
 #Team
 FC Barcelona;1899;Barcelona;Camp Nou
 #President
-P;Joan;Laporta;1970-06-29;7.0;150000.0
+P;Joan;Laporta;1962-06-29;8.2;150000.0
 #Coach
-E;Anna;Martinez;1980-11-23;8.0;120000.0;3
+E;Pere;Romeu;1980-01-01;7.1;120000.0;2
 #Players
-J;Carlos;Ruiz;2000-04-15;6.0;75000.0;10;DAV;85.0
-J;Marc;Lopez;2002-07-03;5.0;68000.0;5;DEF;79.0
+J;Ellie;Roebuck;2000-01-01;6.4;62688.4;25;POR;88.1
+J;Ewa;Pajor;2000-01-01;7.9;73863.1;17;DAV;91.5
+J;Irene;Paredes;2000-01-01;7.4;61124.9;2;DEF;75.7
+J;Caroline;Graham;2000-01-01;6.9;74943.0;10;DAV;74.0
+J;Patricia;Guijarro;2000-01-01;7.0;73558.1;12;MIG;84.2
 ---
 #Team
-Union Femenina;1995;Madrid;Estadio Rosa
+Real Madrid CF;1902;Madrid;Santiago Bernabéu
 #President
-P;Laura;Sanchez;1975-02-28;9.0;180000.0
+P;Florentino;Pérez;1947-03-08;8.0;150000.0
 #Coach
-E;Cristina;Perez;1982-09-14;7.0;110000.0;2
+E;Alberto;Toril;1980-01-01;8.0;120000.0;2
 #Players
-J;Nuria;Gomez;2001-12-10;6.0;72000.0;9;MIG;82.0
-J;Eva;Marti;2003-06-22;5.0;69000.0;2;DEF;78.0
-J;Luna;Diaz;2000-01-05;6.0;76000.0;1;POR;80.0
+J;Naomie;Noëlle Feller;2000-01-01;8.4;75006.8;20;DAV;79.3
+J;Melanie;Leupolz;2000-01-01;9.9;66418.1;24;MIG;72.0
+J;Olga;Carmona García;2000-01-01;8.8;74341.5;7;DEF;89.4
+J;Yasmim;Assis Ribeiro;2000-01-01;8.3;76151.9;12;DEF;70.8
+J;Mylene;Chavas;2000-01-01;6.5;72767.7;13;POR;70.7
+---
+#Team
+Atlético de Madrid;1903;Madrid;Estadio Riyadh Air Metropolitano
+#President
+P;Enrique;Cerezo;1948-02-27;8.0;150000.0
+#Coach
+E;Víctor;Martín;1980-01-01;8.0;120000.0;2
+#Players
+J;Luany;Vitória Da Silva Rosa;2000-01-01;6.0;75000.0;22;DAV;84.0
+J;Gabriela;Antonia García Segura;2000-01-01;6.0;75000.0;8;MIG;85.0
+J;Laura;Tanarro Suárez;2000-01-01;6.0;75000.0;32;DEF;83.0
+J;Sheila;Guijarro Gómez;2000-01-01;6.0;75000.0;9;DAV;80.0
+J;Fiamma;Benítez Iannuzzi;2000-01-01;6.0;75000.0;21;MIG;82.0
+---
+#Team
+Sevilla FC;1890;Sevilla;Ramón Sánchez-Pizjuán
+#President
+P;José;María;1950-07-01;8.0;150000.0
+#Coach
+E;David;Losada;1980-01-01;8.0;120000.0;2
+#Players
+J;Millaray;Scarleth Cortés Espinoza;2000-01-01;8.6;80386.8;10;MIG;82.6
+J;Paula;Partido Durán;2000-01-01;9.4;63897.0;20;DAV;86.3
+J;Alicia;Redondo González;2000-01-01;6.0;76673.2;6;MIG;81.6
+J;Gemma;Gili Giner;2000-01-01;9.7;75872.7;21;MIG;93.7
+J;Esther;Sullastres Ayuso;2000-01-01;6.4;83274.4;1;POR;90.8
+---
+#Team
+Real Sociedad;1909;Guipúzcoa;Reale Arena
+#President
+P;Jokin;Aperribay;1966-05-22;8.0;150000.0
+#Coach
+E;José;Luis Sánchez Vera;1980-01-01;8.0;120000.0;2
+#Players
+J;Elene;Lete Para;2000-01-01;6.4;65917.0;1;POR;76.4
+J;Claire;Lavogez;2000-01-01;9.7;61546.2;23;MIG;75.4
+J;Sanni;Maija Franssi;2000-01-01;9.9;72616.1;9;DAV;92.8
+J;Nerea;Eizagirre Lasa;2000-01-01;5.2;61973.2;10;MIG;90.6
+J;Violeta;García Quiles;2000-01-01;9.6;66629.7;15;DAV;81.6
+---
+#Team
+Real Betis;1907;Sevilla;Benito Villamarín
+#President
+P;Ángel;Haro;1974-02-04;8.0;150000.0
+#Coach
+E;Joseba;Aguirre;1980-01-01;8.0;120000.0;2
+#Players
+J;Yasmine;Zouhir;2000-01-01;7.6;84171.1;18;DAV;74.0
+J;Nuria;Ligero Fernández;2000-01-01;6.9;77837.6;11;DEF;81.6
+J;Rhiannon;Beth Roberts;2000-01-01;8.7;60286.2;5;DEF;76.1
+J;Dorine;Nina Chuigoue;2000-01-01;9.3;83181.0;19;DEF;70.5
+J;Blanca;Muñoz García;2000-01-01;8.4;85662.4;30;DEF;78.5
+---
+#Team
+Athletic Club;1898;Bilbao;San Mamés
+#President
+P;Jon;Uriarte;1960-02-11;8.0;150000.0
+#Coach
+E;David;Aznar;1980-01-01;8.0;120000.0;2
+#Players
+J;Marta;Unzué Urdaniz;2000-01-01;7.1;69236.1;4;MIG;90.1
+J;Itxaso;Uriarte Santamaría;2000-01-01;7.5;88536.2;8;MIG;90.7
+J;Ainize;Barea Núñez;2000-01-01;7.5;89541.1;22;DAV;92.4
+J;Irene;Oguiza Martínez;2000-01-01;7.9;64562.3;6;MIG;71.1
+J;Daniela;Agote Aguirre;2000-01-01;9.7;62716.7;30;DAV;86.5
+---
+#Team
+Valencia CF;1919;Valencia;Mestalla
+#President
+P;Kiat;Lim;1958-12-17;8.0;150000.0
+#Coach
+E;Cristian;Toro;1980-01-01;8.0;120000.0;2
+#Players
+J;Ana;Marcos Moral;2000-01-01;6.8;89796.0;9;DAV;86.3
+J;Ascensión;Martínez Salinas;2000-01-01;7.4;60004.7;20;DAV;91.8
+J;Marta;Carro Nolasco;2000-01-01;6.7;72238.1;5;MIG;80.4
+J;Kerlly;Lizeth Real Carranza;2000-01-01;5.4;67326.0;19;DEF;92.6
+J;Enith;Salón Marcuello;2000-01-01;8.5;74554.7;1;POR;74.5
+---
+#Team
+RCD Espanyol;1900;Cornellá de Llobregat;RCDE Stadium
+#President
+P;Yansheng;Chen;1970-10-01;8.0;150000.0
+#Coach
+E;Sara;Monforte;1980-01-01;8.0;120000.0;2
+#Players
+J;Isabelle;Hoekstra;2000-01-01;6.3;83773.6;28;DAV;73.2
+J;Amanda;Mbadi;2000-01-01;9.5;63871.1;15;MIG;75.2
+J;Ana;Belén Hernández Rodríguez;2000-01-01;8.2;69621.2;9;MIG;83.8
+J;Arola;Aparicio Gili;2000-01-01;8.5;71689.7;23;DAV;72.5
+J;Lucía;Vallejo Blázquez;2000-01-01;7.8;88938.2;5;DEF;89.3
+---
+#Team
+Deportivo Abanca;2016;Galicia;Ciudad deportiva de Abegondo
+#President
+P;Álvaro;García;1959-11-12;8.0;150000.0
+#Coach
+E;Fran;Alonso;1980-01-01;8.0;120000.0;2
+#Players
+J;Floriangel;Mitchell Apóstol Arguelles;2000-01-01;9.7;73598.5;30;DAV;91.5
+J;Elena;Vázquez Brandón;2000-01-01;7.7;64038.5;29;MIG;86.4
+J;Paula;Gutiérrez Caballero;2000-01-01;9.7;83610.3;6;DEF;72.2
+J;Blessing;Augustine Nkor;2000-01-01;6.3;88360.3;11;MIG;70.8
+J;Elyse;Bennett;2000-01-01;7.0;83294.6;23;DAV;82.7
+---
+#Team
+SD Eibar;1940;Éibar;Ipurúa
+#President
+P;Amaia;Gorostiza;1966-06-21;8.0;150000.0
+#Coach
+E;Yerai;Martín;1980-01-01;8.0;120000.0;2
+#Players
+J;Carla;Andrés Abad;2000-01-01;9.8;79704.1;4;DEF;88.0
+J;Iraia;Yerobi Iruretagoiena;2000-01-01;6.6;88810.9;28;MIG;93.0
+J;Amani;Kakounan Bernadette;2000-01-01;8.1;87820.8;6;MIG;76.6
+J;Laura;Camino Fernández;2000-01-01;8.0;64982.8;11;DAV;78.1
+J;Malen;Uranga Callejo;2000-01-01;8.2;67383.9;27;DAV;70.3
+---
+#Team
+Granada CF;1931;Granada;Nuevo Estadio de Los Cármenes
+#President
+P;Sophia;Yang;1965-05-11;8.0;150000.0
+#Coach
+E;Arturo;Ruiz;1980-01-01;8.0;120000.0;2
+#Players
+J;Edna;Imade;2000-01-01;5.3;73349.0;19;DAV;90.3
+J;Ángela;Mateos García;2000-01-01;5.2;65032.6;27;MIG;80.4
+J;Ariadna;Mingueza García;2000-01-01;5.9;75912.7;6;MIG;88.8
+J;Andrea;Gómez Oliver;2000-01-01;9.2;83754.7;11;DAV;92.3
+J;Biljana;Bradic;2000-01-01;7.5;60569.1;17;DAV;82.2
+---
+#Team
+Levante UD;1909;Valencia;Ciutat de Valencia
+#President
+P;Pablo;Sánchez;1970-04-01;8.0;150000.0
+#Coach
+E;Ángel;Saiz;1980-01-01;8.0;120000.0;2
+#Players
+J;Alba;De La Fuente Lozano;2000-01-01;8.3;65041.6;33;DAV;91.7
+J;Núria;Escoms García;2000-01-01;5.3;85520.5;23;MIG;76.3
+J;Teresa;Mérida Cañete;2000-01-01;5.2;84325.5;2;DEF;89.8
+J;Ángela;Sosa Martín;2000-01-01;8.5;89876.6;11;MIG;89.1
+J;Ivonne;Chacón;2000-01-01;7.1;69124.5;24;DAV;87.5
 ---

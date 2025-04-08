@@ -70,4 +70,33 @@ public class Match {
     public boolean isPlayed() {
         return isPlayed;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("🏟️  ")
+                .append(teamHome.getTeamName())
+                .append(" ")
+                .append(goalsHome)
+                .append(" - ")
+                .append(goalsAway)
+                .append(" ")
+                .append(teamAway.getTeamName())
+                .append("\n");
+
+        if (goalHomePlayer != null) {
+            sb.append("   ⚽ Goal (Home): ")
+                    .append(goalHomePlayer.getName()).append(" ")
+                    .append(goalHomePlayer.getSurname()).append("\n");
+        }
+
+        if (goalAwayPlayer != null) {
+            sb.append("   ⚽ Goal (Away): ")
+                    .append(goalAwayPlayer.getName()).append(" ")
+                    .append(goalAwayPlayer.getSurname()).append("\n");
+        }
+
+        return sb.toString();
+    }
+
 }

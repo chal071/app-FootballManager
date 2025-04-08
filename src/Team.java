@@ -130,17 +130,22 @@ public class Team {
     }
 
     public static Team searchTeamInTeamList(Scanner sc, ArrayList<Team> teams) {
-        System.out.println("Input the team's name: ");
+        System.out.print("Input the team's name (or type 'exit' to cancel): ");
         String teamName = sc.nextLine().trim();
+
+        if (teamName.equalsIgnoreCase("exit")) {
+            return null;
+        }
+
         for (Team team : teams) {
             if (team.getTeamName().equalsIgnoreCase(teamName)) {
                 return team;
             }
         }
 
-        System.out.println("Team not found in team list!");
         return null;
     }
+
 
     public void changeCoach(ArrayList<Person> market, Scanner sc) {
         boolean exit = false;
