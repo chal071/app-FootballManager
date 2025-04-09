@@ -44,13 +44,37 @@ public class MarketManager {
     }
 
     public static void transferPlayer(Scanner sc, ArrayList<Team> teams) {
+        System.out.println("📋 Available Teams:");
+        for (Team t : teams) {
+            System.out.println("🔹 " + t.getTeamName());
+        }
+        System.out.println("------------------------------------------------");
+
         System.out.print("Player's current team? ");
         Team originTeam = Team.searchTeamInTeamList(sc, teams);
         if (originTeam == null) return;
 
+        System.out.println("🎽 Players in " + originTeam.getTeamName() + ":");
+        for (Person p : originTeam.getPlayers()) {
+            if (p instanceof Player player) {
+                System.out.println("   - " + player.getName() + " " + player.getSurname() +
+                        " | #" + player.getPlayerNumber() +
+                        " | Pos: " + player.getPosition() +
+                        " | Quality: " + player.getQuality());
+            }
+        }
+
         System.out.print("Player's new team? ");
         Team newTeam = Team.searchTeamInTeamList(sc, teams);
         if (newTeam == null) return;
+
+        System.out.println("🎽 Players in " + newTeam.getTeamName() + ":");
+        for (Person p : newTeam.getPlayers()) {
+            if (p instanceof Player player) {
+                System.out.println("   - " + player.getName() + " " + player.getSurname() +
+                        " | #" + player.getPlayerNumber());
+            }
+        }
 
         System.out.print("Player name: ");
         String playerName = sc.nextLine();
@@ -66,10 +90,12 @@ public class MarketManager {
                 break;
             }
         }
+
         if (target == null) {
             System.out.println("❌ Player not found in " + originTeam.getTeamName());
             return;
         }
+
         if (Team.isPlayerNumberTaken(newTeam, target.getPlayerNumber())) {
             System.out.println("⚠️ Number " + target.getPlayerNumber() + " is already taken in " + newTeam.getTeamName());
             int newNumber;

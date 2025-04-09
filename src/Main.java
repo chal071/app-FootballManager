@@ -102,7 +102,12 @@ public class Main {
     }
 
     //TEAM MENU
-    public static void showTeamMenu() {
+    public static void showTeamMenu(ArrayList<Team> teams) {
+        System.out.println("📋 Available Teams:");
+        for (Team t : teams) {
+            System.out.println("🔹 " + t.getTeamName());
+        }
+        System.out.println("------------------------------------------------");
         System.out.println("\n🛠️ Team Manager Menu:");
         System.out.println("1️⃣  Deregister team ❌");
         System.out.println("2️⃣  Modify president 👑");
@@ -115,7 +120,7 @@ public class Main {
     public static void inputTeamMenu(Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
         int option = 1;
         do {
-            showTeamMenu();
+            showTeamMenu(teams);
             try {
                 option = sc.nextInt();
                 sc.nextLine();
@@ -137,12 +142,10 @@ public class Main {
                 break;
             case 2:
                 changePresident(sc, market, teams);
-                System.out.println("✅ President updated successfully!");
                 System.out.println("-------------------------------");
                 break;
             case 3:
                 dismissCoach(sc, market, teams);
-                System.out.println("🔁 Coach dismissed.");
                 System.out.println("-------------------------------");
                 break;
             case 4:
@@ -226,7 +229,7 @@ public class Main {
                 exit = true;
             } else if (option == 4) {
                 exit = true;
-            } else {
+            } else if (option < 0 || option > 4) {
                 System.out.println("Invalid option. Try again.");
             }
         } while (!exit);
@@ -267,21 +270,23 @@ public class Main {
         if (team != null) {
             MarketManager.addPersonToMarket(market, team.getCoach());
             team.setCoach(null);
+            System.out.println("🔁 Coach dismissed.");
         } else {
             System.out.println("Invalid team. Try again.");
         }
     }
 
     public static void deregisterTeam(Scanner sc, ArrayList<Team> teams) {
-        System.out.println("Input the team's name you want to deregister: ");
         Team team = Team.searchTeamInTeamList(sc, teams);
         teams.remove(team);
+        System.out.println("Team deregister successful!");
     }
 
     public static void changePresident(Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
         Team team = Team.searchTeamInTeamList(sc, teams);
         if (team != null) {
             team.changePresident(market, sc);
+            System.out.println("✅ President updated successfully!");
         } else {
             System.out.println("Invalid team. Try again.");
         }
@@ -347,7 +352,7 @@ public class Main {
         System.out.println("Input the player number: ");
         int number = sc.nextInt();
         sc.nextLine();
-        Player searchPlayer = new Player(playerName, playerSurname, null, 0, 0, number, null, 0); // 只需要匹配用的字段
+        Player searchPlayer = new Player(playerName, playerSurname, null, 6, 0, number, "POR", 30);
         for (Person p : t.getPlayers()) {
             if (p instanceof Player player && player.equals(searchPlayer)) {
                 System.out.println("✅ Player found!\n" + player);
@@ -396,7 +401,6 @@ public class Main {
                 break;
             case 2:
                 league.showTeam();
-                System.out.println("📋 Teams in current league:");
                 break;
             case 3:
                 createTeamListToLeague(sc, league, teams);

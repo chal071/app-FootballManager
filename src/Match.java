@@ -1,6 +1,4 @@
 import datoPersona.Player;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -67,36 +65,20 @@ public class Match {
         return goalHomePlayer;
     }
 
-    public boolean isPlayed() {
-        return isPlayed;
-    }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("🏟️  ")
-                .append(teamHome.getTeamName())
-                .append(" ")
-                .append(goalsHome)
-                .append(" - ")
-                .append(goalsAway)
-                .append(" ")
-                .append(teamAway.getTeamName())
-                .append("\n");
+        String result = "[Match] " + teamHome.getTeamName() + " " + goalsHome + " - " + goalsAway + " " + teamAway.getTeamName() + "\n";
 
         if (goalHomePlayer != null) {
-            sb.append("   ⚽ Goal (Home): ")
-                    .append(goalHomePlayer.getName()).append(" ")
-                    .append(goalHomePlayer.getSurname()).append("\n");
+            result += "  Home goal by: " + goalHomePlayer.getName() + " " + goalHomePlayer.getSurname() + "\n";
         }
 
         if (goalAwayPlayer != null) {
-            sb.append("   ⚽ Goal (Away): ")
-                    .append(goalAwayPlayer.getName()).append(" ")
-                    .append(goalAwayPlayer.getSurname()).append("\n");
+            result += "  Away goal by: " + goalAwayPlayer.getName() + " " + goalAwayPlayer.getSurname() + "\n";
         }
 
-        return sb.toString();
+        return result;
     }
 
 }

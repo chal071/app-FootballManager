@@ -30,9 +30,10 @@ public class League {
     public void createAllMatches() {
         List<Team> teamList = new ArrayList<>(teams);
         for (int i = 0; i < teamList.size(); i++) {
-            for (int j = i + 1; j < teamList.size(); j++) {
-                Match m = new Match(teamList.get(i), teamList.get(j));
-                matches.add(m);
+            for (int j = 0; j < teamList.size(); j++) {
+                if (i != j) {
+                    matches.add(new Match(teamList.get(i), teamList.get(j)));
+                }
             }
         }
     }
@@ -77,6 +78,7 @@ public class League {
         }
     }
 
+
     public void showTopScorers() {
         System.out.println("\nTop Scorers:");
         List<Map.Entry<Player, Integer>> sorted = new ArrayList<>(goalScorers.entrySet());
@@ -90,11 +92,14 @@ public class League {
     }
 
     public void showTeam() {
-        System.out.println("\nTeam: ");
-        for (Team t : this.teams) {
-            System.out.println(t);
+        System.out.println("\n📋 Teams in league:");
+        List<Team> sortedTeams = new ArrayList<>(teams);
+        sortedTeams.sort(Comparator.comparing(Team::getTeamName));
+        for (Team t : sortedTeams) {
+            System.out.println("- " + t.getTeamName());
         }
     }
+
 
     public void reset() {
         teams.clear();

@@ -139,9 +139,8 @@ public class Player extends Person {
         String position = sc.nextLine().toUpperCase();
         System.out.println("Input the person's quality(30 - 100): ");
         int quality = sc.nextInt();
-        sc.nextLine();
         return new Player(person.name, person.surname, person.birthDate, person.motivationLevel, person.annualSalary,
-                playerNumber, position, quality);
+                playerNumber, position, quality){};
     }
 
 

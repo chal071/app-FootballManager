@@ -307,34 +307,39 @@ public class Team {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Team: ").append(teamName).append("\n");
-        sb.append("Founded: ").append(foundationYear).append("\n");
-        sb.append("City: ").append(city).append("\n");
-        sb.append("Stadium: ").append(stadiumName).append("\n");
+        String result = "Team: " + teamName + "\n" +
+                "Founded: " + foundationYear + "\n" +
+                "City: " + city + "\n" +
+                "Stadium: " + stadiumName + "\n";
+
         if (president != null) {
-            sb.append("President: ").append(president.getName()).append(" ").append(president.getSurname()).append("\n");
+            result += "President: " + president.getName() + " " + president.getSurname() + "\n";
         } else {
-            sb.append("President: (none)\n");
+            result += "President: (none)\n";
         }
+
         if (coach != null) {
-            sb.append("Coach: ").append(coach.getName()).append(" ").append(coach.getSurname()).append("\n");
+            result += "Coach: " + coach.getName() + " " + coach.getSurname() + "\n";
         } else {
-            sb.append("Coach: (none)\n");
+            result += "Coach: (none)\n";
         }
-        sb.append("Players:\n");
+
+        result += "Players:\n";
+
         if (players != null && !players.isEmpty()) {
             for (Person p : players) {
                 if (p instanceof Player player) {
-                    sb.append("   - ").append(player.getName()).append(" ").append(player.getSurname())
-                            .append(" | #").append(player.getPlayerNumber())
-                            .append(" | Pos: ").append(player.getPosition())
-                            .append(" | Quality: ").append(player.getQuality()).append("\n");
+                    result += "   - " + player.getName() + " " + player.getSurname() +
+                            " | #" + player.getPlayerNumber() +
+                            " | Pos: " + player.getPosition() +
+                            " | Quality: " + player.getQuality() + "\n";
                 }
             }
         } else {
-            sb.append("(no players)\n");
+            result += "(no players)\n";
         }
-        return sb.toString();
+
+        return result;
     }
+
 }
