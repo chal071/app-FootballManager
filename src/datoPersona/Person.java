@@ -54,7 +54,7 @@ public class Person {
         System.out.println("Input the person's annual salary: ");
         double annualSalary = sc.nextDouble();
         sc.nextLine();
-        return new Person(name, surname, birthday, motivation, annualSalary) {};
+        return new Person(name, surname, birthday, motivation, annualSalary);
     }
 
     @Override
